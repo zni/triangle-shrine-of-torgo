@@ -1,4 +1,4 @@
-var SCALE = 5;
+var SCALE = 20;
 
 function rand(n) {
     return Math.floor((Math.random() * n) + 1);
@@ -34,9 +34,38 @@ ColorPicker.prototype.alternate = function () {
     return color;
 }
 
+function Triangle(ctx) {
+    this.ctx = ctx;
+}
+
+Triangle.prototype.topLeft = function (x, y, scale) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(x, y);
+    this.ctx.lineTo(x, y + scale);
+    this.ctx.lineTo(x + scale, y);
+    this.ctx.fill()
+}
+
+Triangle.prototype.up = function (x, y, scale) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(x, y);
+    this.ctx.lineTo(x - scale, y + scale);
+    this.ctx.lineTo(x + scale, y + scale);
+    this.ctx.fill()
+}
+
+Triangle.prototype.down = function (x, y, scale) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(x, y + scale);
+    this.ctx.lineTo(x - scale, y);
+    this.ctx.lineTo(x + scale, y);
+    this.ctx.fill()
+}
+
 function scatter(ctx, x, y) {
+    var color = new ColorPicker(neonCreme);
     for (var n = 0; n < 1280; n++) {
-        ctx.fillStyle = colorPicker();
+        ctx.fillStyle = color.choose();
         var new_x = rand0(x);
         var new_y = rand0(y);
         // var size = randInterval(200, 50);
@@ -45,53 +74,28 @@ function scatter(ctx, x, y) {
     }
 }
 
-function triangleL(ctx, x, y) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x, y + SCALE);
-    ctx.lineTo(x + SCALE, y);
-    ctx.fill()
-}
-
-function triangleUp(ctx, x, y) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x - SCALE, y + SCALE);
-    ctx.lineTo(x + SCALE, y + SCALE);
-    ctx.fill()
-}
-
-function triangleDown(ctx, x, y) {
-    ctx.beginPath();
-    ctx.moveTo(x, y + SCALE);
-    ctx.lineTo(x - SCALE, y);
-    ctx.lineTo(x + SCALE, y);
-    ctx.fill()
-}
-
-function fill(ctx, x, y) {
+function fillTriangle(ctx, x, y) {
+    var color = new ColorPicker(neonCreme);
+    var triangle = new Triangle(ctx);
     for (var n = 0; n < x; n += SCALE) {
-        for (var m = 0; m < y; m += SCALE) { 
-            ctx.fillStyle = colorPicker();
-            var size = 10;
-            //ctx.fillRect(n, m, size, size);
-            triangleL(ctx, n, m);
+        for (var m = 0; m < y; m += SCALE) {
+            ctx.fillStyle = color.choose();
+            triangle.topLeft(n, m, SCALE);
         }
     }
 }
 
 function weird1(ctx, x, y) {
     var color = new ColorPicker(neonCreme);
+    var triangle = new Triangle(ctx);
     var flip = false;
     for (var m = 0; m < y; m += Math.ceil(SCALE * 1.2)) {
-        for (var n = 0; n < x; n += Math.ceil(SCALE * 1.2)) { 
-            ctx.fillStyle = color.choose();
-            var size = 10;
-            //ctx.fillRect(n, m, size, size);
+        for (var n = 0; n < x; n += Math.ceil(SCALE * 1.2)) {
+            ctx.fillStyle = color.alternate();
             if (flip) {
-                triangleUp(ctx, n, m);
+                triangle.up(n, m, SCALE);
             } else {
-                triangleDown(ctx, n, m);
+                triangle.down(n, m, SCALE);
             }
 
             flip = !flip;
@@ -101,16 +105,130 @@ function weird1(ctx, x, y) {
 
 function tess(ctx, x, y) {
     var color = new ColorPicker(neonCreme);
+    var triangle = new Triangle(ctx);
     var flip = false;
     for (var m = 0; m < y; m += SCALE - 1) {
-        for (var n = 0; n < x; n += SCALE - 1) { 
+        for (var n = 0; n < x; n += SCALE - 1) {
             ctx.fillStyle = color.alternate();
-            var size = 10;
-            //ctx.fillRect(n, m, size, size);
             if (flip) {
-                triangleUp(ctx, n, m);
+                triangle.up(n, m, SCALE);
             } else {
-                triangleDown(ctx, n, m);
+                triangle.down(n, m, SCALE);
+            }
+            flip = !flip;
+        }
+    }
+}
+
+function bands1(ctx, x, y) {
+    var triangle = new Triangle(ctx);
+    var neon = new ColorPicker(neonCreme);
+    var flip = false;
+    for (var m = 0; m < y + SCALE; m += SCALE - 1) {
+        if (m < 200) {
+            SCALE = 10;
+        } else if (m > 400) {
+            SCALE = 50;
+        } else {
+            SCALE = 20;
+        }
+        for (var n = 0; n < x + SCALE; n += SCALE - 1) {
+            ctx.fillStyle = neon.alternate();
+
+            if (flip) {
+                triangle.up(n, m, SCALE);
+            } else {
+                triangle.down(n, m, SCALE);
+            }
+
+            flip = !flip;
+        }
+    }
+}
+
+function bands2(ctx, x, y) {
+    var triangle = new Triangle(ctx);
+    var neon = new ColorPicker(neonCreme);
+    var bw = new ColorPicker(["black", "#333"]);
+    var flip = false;
+    for (var m = 0; m < y + SCALE; m += SCALE - 1) {
+        if (m < 200) {
+            SCALE = 10;
+        } else if (m > 400) {
+            SCALE = 50;
+        } else {
+            SCALE = 20;
+        }
+        for (var n = 0; n < x + SCALE; n += SCALE - 1) {
+            if (m % 2 === 0) {
+                ctx.fillStyle = bw.alternate();
+            } else {
+                ctx.fillStyle = neon.alternate();
+            }
+
+            if (flip) {
+                triangle.up(n, m, SCALE);
+            } else {
+                triangle.down(n, m, SCALE);
+            }
+
+            flip = !flip;
+        }
+    }
+}
+
+function bands3(ctx, x, y) {
+    var triangle = new Triangle(ctx);
+    var neon = new ColorPicker(neonCreme);
+    var bw = new ColorPicker(["black", "#333"]);
+    var flip = false;
+    for (var m = 0; m < y + SCALE; m += SCALE - 1) {
+        if (m % 2 === 0) {
+            SCALE = 50;
+        } else {
+            SCALE = 20;
+        }
+        for (var n = 0; n < x + SCALE; n += SCALE - 1) {
+            if (m > 400 || m < 200) {
+                ctx.fillStyle = bw.alternate();
+            } else {
+                ctx.fillStyle = neon.alternate();
+            }
+
+            if (flip) {
+                triangle.up(n, m, SCALE);
+            } else {
+                triangle.down(n, m, SCALE);
+            }
+
+            flip = !flip;
+        }
+    }
+}
+
+function bands4(ctx, x, y) {
+    var triangle = new Triangle(ctx);
+    var neon = new ColorPicker(neonCreme);
+    var bw = new ColorPicker(["black", "#333"]);
+    var flip = false;
+    for (var m = 0; m < y + SCALE; m += SCALE - 1) {
+        if (m % 5 === 0) {
+            SCALE = 50;
+        } else {
+            SCALE = 20;
+        }
+
+        for (var n = 0; n < x + SCALE; n += SCALE - 1) {
+            if (m % 2 === 0) {
+                ctx.fillStyle = bw.alternate();
+            } else {
+                ctx.fillStyle = neon.alternate();
+            }
+
+            if (flip) {
+                triangle.up(n, m, SCALE);
+            } else {
+                triangle.down(n, m, SCALE);
             }
 
             flip = !flip;
@@ -119,15 +237,11 @@ function tess(ctx, x, y) {
 }
 
 function setup(element) {
-    console.log('element:', element);
-    //var max_height = window.innerHeight;
-    //var max_width = window.innerWidth;
     var max_height = screen.height;
     var max_width = screen.width;
     element.width = max_width;
     element.height = max_height;
     var ctx = element.getContext("2d");
 
-    // scatter(ctx, max_width, max_height);
-    weird1(ctx, max_width, max_height);
+    fillTriangle(ctx, max_width, max_height);
 }
