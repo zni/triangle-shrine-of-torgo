@@ -29,7 +29,7 @@ ColorPicker.prototype.choose = function () {
 }
 
 ColorPicker.prototype.alternate = function () {
-    var color = this.scheme[this.choice]
+    var color = this.scheme[this.choice];
     this.choice = (this.choice + 1) % this.length;
     return color;
 }
@@ -75,11 +75,16 @@ function scatter(ctx, x, y) {
 }
 
 function fillTriangle(ctx, x, y) {
-    var color = new ColorPicker(neonCreme);
+    var neon = new ColorPicker(neonCreme);
+    var bw = new ColorPicker(["#333", "black"]);
     var triangle = new Triangle(ctx);
     for (var n = 0; n < x; n += SCALE) {
         for (var m = 0; m < y; m += SCALE) {
-            ctx.fillStyle = color.choose();
+            if ((n % 3) === 0) {
+                ctx.fillStyle = neon.alternate();
+            } else {
+                ctx.fillStyle = bw.alternate();
+            }
             triangle.topLeft(n, m, SCALE);
         }
     }
