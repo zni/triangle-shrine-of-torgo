@@ -90,6 +90,49 @@ function fillTriangle(ctx, x, y) {
     }
 }
 
+function Weird1(ctx, max_x, max_y) {
+    var self = this;
+    this.ctx = ctx;
+    this.max_x = max_x;
+    this.max_y = max_y;
+    this.x = 0;
+    this.y = 0;
+    this.color = new ColorPicker(neonCreme);
+    this.triangle = new Triangle(ctx);
+    this.scale = 10;
+    this.flip = false;
+}
+
+Weird1.prototype.draw = function () {
+    if (this.x >= this.max_x) {
+        this.x = 0;
+    }
+
+    if (this.y >= this.max_y) {
+        this.y = 0;
+    }
+
+    this.ctx.fillStyle = this.color.choose();
+
+    if (this.flip) {
+        this.triangle.up(this.x, this.y, this.scale);
+    } else {
+        this.triangle.down(this.x, this.y, this.scale);
+    }
+
+    this.flip = !this.flip;
+
+    if (rand0(2) == 0) {
+        this.y += Math.ceil(this.scale * 1.2);
+    } else {
+        this.x += Math.ceil(this.scale * 1.2);
+    }
+}
+
+Weird1.prototype.run = function() {
+    setInterval(this.draw.bind(this), 100);
+}
+
 function weird1(ctx, x, y) {
     var color = new ColorPicker(neonCreme);
     var triangle = new Triangle(ctx);
@@ -248,5 +291,7 @@ function setup(element) {
     element.height = max_height;
     var ctx = element.getContext("2d");
 
-    fillTriangle(ctx, max_width, max_height);
+    var weird = new Weird1(ctx, max_width, max_height);
+    weird.run();
+    // weird1(ctx, max_width, max_height);
 }
