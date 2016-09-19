@@ -91,7 +91,6 @@ function fillTriangle(ctx, x, y) {
 }
 
 function Weird1(ctx, max_x, max_y) {
-    var self = this;
     this.ctx = ctx;
     this.max_x = max_x;
     this.max_y = max_y;
@@ -99,7 +98,7 @@ function Weird1(ctx, max_x, max_y) {
     this.y = 0;
     this.color = new ColorPicker(neonCreme);
     this.triangle = new Triangle(ctx);
-    this.scale = 10;
+    this.scale = 4;
     this.flip = false;
 }
 
@@ -112,7 +111,7 @@ Weird1.prototype.draw = function () {
         this.y = 0;
     }
 
-    this.ctx.fillStyle = this.color.choose();
+    this.ctx.fillStyle = this.color.alternate();
 
     if (this.flip) {
         this.triangle.up(this.x, this.y, this.scale);
@@ -130,7 +129,7 @@ Weird1.prototype.draw = function () {
 }
 
 Weird1.prototype.run = function() {
-    setInterval(this.draw.bind(this), 100);
+    setInterval(this.draw.bind(this), 50);
 }
 
 function weird1(ctx, x, y) {
