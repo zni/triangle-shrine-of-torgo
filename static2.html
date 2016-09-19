@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    canvas {
+        padding: 0;
+        margin: auto;
+        display: block;
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body bgcolor="#222">
+
+<canvas id="myCanvas" width="400" height="400" style="border:1px solid #c3c3c3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+MOUSE_X = 0;
+MOUSE_Y = 0;
+
+$(document).on("mousemove",
+    function (event) {
+        MOUSE_X = event.pageX;
+        MOUSE_Y = event.pageY;
+    });
+
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+function getdown() {
+    for (var x = 0; x < 400; x = x + 5) {
+        //var b = Math.floor(Math.random() * 255);
+        //var r = 20;
+        //var g = 10;
+
+        var b = Math.floor(Math.random() * 255);
+        var r = MOUSE_X % 255;
+        var g = MOUSE_Y % 255;
+        var col = "rgb(" + r + "," + g + "," + b + ")";
+
+        ctx.fillStyle = col;
+        ctx.fillRect(x, 0, 5, 400);
+    }
+
+    // 500 is cool lol
+    for (var y = 0; y < 10; y++) {
+        var row = Math.floor(Math.random() * 400);
+        var col = Math.floor(Math.random() * 400);
+
+        // var r = Math.floor(Math.random() * 255);
+        // var g = Math.floor(Math.random() * 255);
+        // var b = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        var r = MOUSE_Y % 255;
+        var g = MOUSE_X % 255;
+        var color = "rgb(" + r + "," + g + "," + b + ")";
+
+        ctx.fillStyle = color;
+        ctx.fill(triangle(row, col));
+    }
+}
+
+function triangle(x, y) {
+    var path = new Path2D();
+    path.moveTo(x, y);
+    path.lineTo(x + 25, y + 25);
+    path.lineTo(x + 25, y - 25);
+
+    return path;
+}
+// was 100
+setInterval(getdown, 500);
+</script>
+
+</body>
+</html>
