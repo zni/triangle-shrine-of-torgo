@@ -4,13 +4,13 @@
  * Author: Matt Godshall
  */
 
-function TriangularTile(ctx, max_x, max_y, scheme) {
+function TriangularTile(ctx, max_x, max_y, scheme, scale) {
     this.ctx = ctx;
     this.max_x = max_x;
     this.max_y = max_y;
     this.color = new ColorPicker(scheme);
     this.triangle = new Triangle(ctx);
-    this.scale = 50;
+    this.scale = scale;
     this.x_offset = Math.floor(this.scale / 2);
     this.y_offset = this.scale - 1;
 }

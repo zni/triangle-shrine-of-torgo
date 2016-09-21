@@ -35,13 +35,14 @@ Triangle.prototype.down = function (x, y, scale) {
 }
 
 Triangle.prototype.diamond = function (x, y, scale) {
+    var halfScale = Math.floor(scale / 2);
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
-    this.ctx.lineTo(x - Math.floor(scale / 2),
-                    y + Math.floor(scale / 2));
+    this.ctx.lineTo(x - halfScale,
+                    y + halfScale);
     this.ctx.lineTo(x, y + scale);
-    this.ctx.lineTo(x + Math.floor(scale/2),
-                    y + Math.floor(scale / 2));
+    this.ctx.lineTo(x + halfScale,
+                    y + halfScale);
     this.ctx.fill()
 }
 

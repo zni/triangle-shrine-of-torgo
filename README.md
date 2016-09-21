@@ -10,9 +10,13 @@ Javascript/canvas based generative art-ish stuff.
 What is inside?
 ---------------
 
- `static.html` and `static2.html` are older self-contained things that move.
-`canvas` is turning into a static triangle pattern zone.
+`static.html` and `static2.html` are older self-contained noisy things that move.
 
-`tritile.js` produces a static triangular tiling.
+`tritile.html` produces a static triangular tiling on a good day.
 
-`weird1.js` does a random walk leaving triangles in its wake.
+`wander.html` produces a static collection of lines, inspired by [Anders Hoff](http://inconvergent.net/generative/linetrace/)
+and [John Franzen](http://www.johnfranzen.com/art/JOHN_FRANZEN_-_EACH_LINE_ONE_BREATH_-_PAPER_EDITION.html).
+
+`weird1.html` does a random walk, ideally making a triangular tiling, but
+really just shitting triangles over the top of other triangles in opposite
+orientations.

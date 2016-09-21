@@ -1,13 +1,12 @@
 <html>
     <head>
-        <script type="text/javascript" src="rand.js"></script>
-        <script type="text/javascript" src="colorpicker.js"></script>
-        <script type="text/javascript" src="triangle.js"></script>
-        <script type="text/javascript" src="tritile.js"></script>
-        <script type="text/javascript" src="weird1.js"></script>
+        <script type="text/javascript" src="util/rand.js"></script>
+        <script type="text/javascript" src="util/colorpicker.js"></script>
+        <script type="text/javascript" src="util/triangle.js"></script>
+        <script type="text/javascript" src="patterns/tritile.js"></script>
     </head>
     <body bgcolor="#000000" style="padding: 0px; margin: 0px">
-        <canvas id="foo" width="200" height="100" style="border:1px solid #000000;">
+        <canvas id="foo" width="200" height="100">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
 
@@ -19,13 +18,11 @@
             c.height = max_height;
             var ctx = c.getContext("2d");
 
-            //var weird = new Weird1(ctx, max_width, max_height);
-            //weird.run();
-
             var tile = new TriangularTile(ctx,
                                           max_width,
                                           max_height,
-                                          gray7);
+                                          neonCreme,
+                                          50);
             tile.draw();
         </script>
     </body>

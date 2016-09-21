@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script type="text/javascript" src="util/rand.js"></script>
+        <script type="text/javascript" src="util/colorpicker.js"></script>
+        <script type="text/javascript" src="util/triangle.js"></script>
+        <script type="text/javascript" src="patterns/weird1.js"></script>
+    </head>
+    <body bgcolor="#000000" style="padding: 0px; margin: 0px">
+        <canvas id="foo" width="200" height="100">
+        Your browser does not support the HTML5 canvas tag.
+        </canvas>
+
+        <script>
+            var c = document.getElementById("foo");
+            var max_height = screen.height;
+            var max_width = screen.width;
+            c.width = max_width;
+            c.height = max_height;
+            var ctx = c.getContext("2d");
+
+            var weird = new Weird1(ctx, max_width, max_height);
+            weird.run();
+        </script>
+    </body>
+</html>
