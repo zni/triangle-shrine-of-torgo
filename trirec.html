@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <script type="text/javascript" src="util/rand.js"></script>
+        <script type="text/javascript" src="util/colorpicker.js"></script>
+        <script type="text/javascript" src="util/triangle.js"></script>
+        <script type="text/javascript" src="patterns/trirec.js"></script>
+    </head>
+    <body bgcolor="#000000" style="padding: 0px; margin: 0px">
+        <canvas id="foo" width="200" height="100">
+        Your browser does not support the HTML5 canvas tag.
+        </canvas>
+
+        <script>
+            var c = document.getElementById("foo");
+            var max_height = screen.height;
+            var max_width = screen.width;
+            c.width = max_width;
+            c.height = max_height;
+            var ctx = c.getContext("2d");
+
+            var tile = new TriRec(ctx,
+                                  max_width,
+                                  max_height,
+                                  gray7,
+                                  50);
+
+            tile.draw(Math.floor(max_width * (1/16)));
+            tile.draw(Math.floor(max_width * (3/16)));
+            tile.draw(Math.floor(max_width * (5/16)));
+            tile.draw(Math.floor(max_width * (7/16)));
+            tile.draw(Math.floor(max_width * (9/16)));
+            tile.draw(Math.floor(max_width * (11/16)));
+            tile.draw(Math.floor(max_width * (13/16)));
+            tile.draw(Math.floor(max_width * (15/16)));
+
+            tile.draw(Math.floor(max_width * (1/8)));
+            tile.draw(Math.floor(max_width * (3/8)));
+            tile.draw(Math.floor(max_width * (5/8)));
+            tile.draw(Math.floor(max_width * (7/8)));
+
+            tile.draw(Math.floor(max_width * (1/4)));
+            tile.draw(Math.floor(max_width * (3/4)));
+
+            tile.draw(Math.floor(max_width / 2));
+            tile.draw(0);
+
+            tile.draw(max_width);
+        </script>
+    </body>
+</html>

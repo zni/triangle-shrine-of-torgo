@@ -3,16 +3,34 @@
         <script type="text/javascript" src="util/rand.js"></script>
         <script type="text/javascript" src="util/colorpicker.js"></script>
         <script type="text/javascript" src="patterns/wander.js"></script>
+    <style>
+    canvas {
+        padding: 0;
+        margin: auto;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #666;
+    }
+    </style>
     </head>
-    <body bgcolor="#000000" style="padding: 0px; margin: 0px">
+    <body bgcolor="#333">
         <canvas id="foo" width="200" height="100">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
 
         <script>
+            var interval;
             var c = document.getElementById("foo");
-            var max_height = screen.height;
-            var max_width = screen.width;
+            //var max_height = screen.height;
+            //var max_width = screen.width;
+            var max_height = 500;
+            var max_width = 900;
             c.width = max_width;
             c.height = max_height;
             var ctx = c.getContext("2d");
@@ -23,7 +41,17 @@
                                             gray7,
                                             20,
                                             false);
-            wander.draw();
+            interval = setInterval(wander.run.bind(wander), 150);
+            c.addEventListener("mouseenter",
+                               function (e) {
+                                   clearInterval(interval);
+                               },
+                               true);
+            c.addEventListener("mouseleave",
+                               function (e) {
+                                   interval = setInterval(wander.run.bind(wander), 100)
+                               },
+                               true); 
         </script>
     </body>
 </html>
