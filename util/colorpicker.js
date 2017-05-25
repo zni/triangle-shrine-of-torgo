@@ -10,6 +10,12 @@ var neonCreme= ["#aa1155",
                 "#dd1155",
                 "#ffee88",
                 "#00cc99"];
+var melo = ["#000b2f",
+	"#f44e57",
+	"#f9bb64",
+	"#63193b"]
+
+var yargh = ["#32ba81", "#003fa5", "#320447", "#eaf200"]
 
 var gray = ["#333", "#666", "#999"]
 var gray7 = ["#111",
@@ -19,6 +25,17 @@ var gray7 = ["#111",
              "#555",
              "#666",
              "#777"]
+
+var cmyk = ["#68DD79",
+            "#00BFB2",
+            "#E4FF1A",
+            "#CC3363",
+            "#540D6E"]
+
+var cmyk_alt = ["#68DD79",
+                "#00BFB2",
+                "#E4FF1A",
+                "#CC3363"]
 
 function ColorPicker(scheme) {
     this.scheme = scheme;
