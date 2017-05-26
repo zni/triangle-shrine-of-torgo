@@ -10,7 +10,7 @@ function Bars(ctx, max_x, max_y, scheme, scale, randLength, enableNoise) {
     this.max_x = max_x;
     this.max_y = max_y;
     this.color = new ColorPicker(scheme);
-    this.color_alt = new ColorPicker(gray);
+    this.color_alt = new ColorPicker(yargh);
     this.scale = scale;
     this.x_offset = Math.floor(this.scale / 2);
     this.randLength = randLength;
@@ -46,11 +46,12 @@ Bars.prototype.draw = function () {
         this.ctx.lineWidth = this.lineWidth;
 
         // Add some gray chunks.
-        var start = 0;
+        //var start = 0;
+        var start = x - Math.floor(offset / 2);
         var size = 10;
         var amount = this.lineWidth / size;
         for (var rect_y = this.max_y - size; rect_y > this.max_y - (size * amount); rect_y -= size) {
-            for (var rect_x = start; rect_x < this.max_x; rect_x += size) {
+            for (var rect_x = start; rect_x < x + offset; rect_x += size) {
                 this.ctx.fillStyle = this.color_alt.alternate();
                 this.ctx.fillRect(rect_x, rect_y, size, size);
             }
