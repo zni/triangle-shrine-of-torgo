@@ -3,7 +3,13 @@
         <script type="text/javascript" src="util/rand.js"></script>
         <script type="text/javascript" src="util/colorpicker.js"></script>
         <script type="text/javascript" src="patterns/bars.js"></script>
+        <script type="text/javascript" src="tinycolor.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
     <style>
+    body {
+        font-family: 'Abel', sans-serif; 
+        font-size: 22px;
+    }
     canvas {
         padding: 0;
         margin: auto;
@@ -20,9 +26,10 @@
     </style>
     </head>
     <body bgcolor="#333">
-        <input id="speed" type="range" min="10" max="200" step="1"></input>
-        <input id="noise" type="checkbox">Noise</input>
+        <!--
+        <input id="speed" type="range" min="100" max="1000" step="100">Speed</input><br />
         <input id="rlength" type="checkbox">Random Length</input>
+        -->
         <canvas id="foo" width="200" height="100">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
@@ -32,44 +39,37 @@
             var c = document.getElementById("foo");
             //var max_height = screen.height;
             //var max_width = screen.width;
-            var max_height = 500;
+            var max_height = 600;
             var max_width = 900;
             c.width = max_width;
             c.height = max_height;
             var ctx = c.getContext("2d");
 
             var speed = document.getElementById("speed");
-            var noise = document.getElementById("noise");
             var randomLength = document.getElementById("rlength");
             var bars = new Bars(ctx,
                                 max_width,
                                 max_height,
-                                yargh,
+                                cmyk,
                                 20,
-                                randomLength.checked,
-                                noise.checked);
-            interval = setInterval(bars.run.bind(bars), speed.valueAsNumber);
+                                false);
+            bars.run()
+            //interval = setInterval(bars.run.bind(bars), speed.valueAsNumber);
 
-            speed.addEventListener("change",
-                                function (e) {
-                                    clearInterval(interval);
-                                    new_speed = speed.valueAsNumber;
-                                    interval = setInterval(bars.run.bind(bars), new_speed);
-                                },
-                                true);
+            //speed.addEventListener("change",
+            //                    function (e) {
+            //                        clearInterval(interval);
+            //                        new_speed = speed.valueAsNumber;
+            //                        interval = setInterval(bars.run.bind(bars), new_speed);
+            //                    },
+            //                    true);
 
-            noise.addEventListener("change",
-                                   function (e) {
-                                        bars.enableNoise = noise.checked;
-                                    },
-                                    true);
-
-            randomLength.addEventListener("change",
-                                          function (e) {
-                                               bars.randLength = rlength.checked;
-                                               console.log('bars.randLength:', bars.randLength);
-                                           },
-                                           true);
+            //randomLength.addEventListener("change",
+            //                              function (e) {
+            //                                   bars.randLength = rlength.checked;
+            //                                   console.log('bars.randLength:', bars.randLength);
+            //                               },
+            //                               true);
         </script>
 
     </body>
