@@ -13,6 +13,9 @@ function rand0(n) {
 }
 
 function randInterval(n, m) {
-    return Math.max(Math.floor((Math.random() * n) + 1), m);
+    return Math.max(rand(n), m);
 }
 
+function randBool() {
+    return Boolean(rand0(2));
+}

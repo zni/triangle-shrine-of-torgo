@@ -40,7 +40,7 @@
             //var max_height = screen.height;
             //var max_width = screen.width;
             var max_height = 600;
-            var max_width = 900;
+            var max_width = 600;
             c.width = max_width;
             c.height = max_height;
             var ctx = c.getContext("2d");
@@ -54,6 +54,17 @@
                                 20,
                                 false);
             bars.run()
+            //interval = setInterval(bars.run.bind(bars), 80);
+            //c.addEventListener("mouseenter",
+            //                   function (e) {
+            //                       clearInterval(interval);
+            //                   },
+            //                   true);
+            //c.addEventListener("mouseleave",
+            //                   function (e) {
+            //                       interval = setInterval(bars.run.bind(bars), 100)
+            //                   },
+            //                   true); 
             //interval = setInterval(bars.run.bind(bars), speed.valueAsNumber);
 
             //speed.addEventListener("change",
