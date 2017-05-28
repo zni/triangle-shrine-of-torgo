@@ -20,3 +20,12 @@ and [John Franzen](http://www.johnfranzen.com/art/JOHN_FRANZEN_-_EACH_LINE_ONE_B
 `weird1.html` does a random walk, ideally making a triangular tiling, but
 really just shitting triangles over the top of other triangles in opposite
 orientations.
+
+`bars.html` is kind of like a broken video feed.
+
+
+Dependencies?
+-------------
+
+Some of these require [TinyColor](https://github.com/bgrins/TinyColor). Put
+`tinycolor.js` in the root of this repo's directory.
