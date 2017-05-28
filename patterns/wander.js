@@ -34,7 +34,7 @@ WanderingLines.prototype._drawLine = function (x) {
     var noise;
     var limit;
     if (this.randLength) {
-        limit = randInterval(this.max_y, 20);
+        limit = randInterval(20, this.max_y);
     } else {
         limit = this.max_y;
     }

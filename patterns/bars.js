@@ -10,7 +10,6 @@ function Bars(ctx, max_x, max_y, scheme, scale, randLength) {
     this.max_x = max_x;
     this.max_y = max_y;
     this.color = new ColorPicker(scheme);
-    //this.color_alt = new ColorPicker(gray7.concat(cmyk));
     this.color_alt = new ColorPicker(cmyk);
     this.scale = scale;
     this.x_offset = Math.floor(this.scale / 2);
@@ -21,23 +20,24 @@ function Bars(ctx, max_x, max_y, scheme, scale, randLength) {
 }
 
 Bars.prototype.draw = function () {
-    //var offset = this.ctx.lineWidth; original
     var offset;
     for (var x = Math.floor(this.ctx.lineWidth / 2); x < this.max_x; x += offset) {
-        offset = Math.ceil(this.max_x / randInterval(8, 4));
-        this.ctx.lineWidth = offset; // new style
+        offset = Math.ceil(this.max_x / randInterval(4, 8));
+        this.ctx.lineWidth = offset;
         this.ctx.strokeStyle = this.color.alternate();
         this._drawLine(x, false);
+    }
 
+    if (randBool()) {
         // Alpha burning lines.
         this.ctx.lineWidth = 1;
         this.ctx.globalAlpha = 0;
         this.ctx.globalCompositeOperation = 'color-burn';
-        for (var inner_x = 0; inner_x < x + offset; inner_x += this.ctx.lineWidth) {
+        for (var x = 0; x < this.max_x; x++) {
             this.ctx.globalAlpha = this.ctx.globalAlpha + 0.001;
             this.ctx.strokeStyle = this.color_alt.alternate();
             if (randBool()) {
-                this._drawLine(inner_x, true);
+                this._drawLine(x, true);
             }
         }
         this.randLength = false;
@@ -45,7 +45,9 @@ Bars.prototype.draw = function () {
         // Reset stroke and alpha.
         this.ctx.globalAlpha = 1;
         this.ctx.lineWidth = this.lineWidth;
+    }
 
+    if (randBool()) {
         var noise_rounds = rand(5);
         for (var round = 0; round < noise_rounds; round++) {
             // Switch it up (yuk yuk yuk) from just color-dodge and hue.
@@ -66,19 +68,14 @@ Bars.prototype.draw = function () {
                     this.ctx.globalCompositeOperation = 'color-burn';
                     break;
             }
-            this._drawChunksRandomSize(x, offset);
+            this._drawChunksRandomSize(0, offset);
         }
+
         // Lay down a nice chunky base layer of chunks. Real chunky like.
         this.ctx.globalCompositeOperation = 'color-burn';
-        this._drawNoise(x, offset);
+        this._drawNoise(0);
         // Reset to default composite operation.
         this.ctx.globalCompositeOperation = 'source-over';
-
-        // Reset things.
-        this.ctx.globalAlpha = 1;
-        this.ctx.strokeStyle = "#000";
-        //this.ctx.lineWidth = this.lineWidth; original
-        this.ctx.lineWidth = offset;
     }
 }
 
@@ -120,7 +117,7 @@ Bars.prototype._drawChunksAlt = function (x, offset) {
                 //if (rand0(2) == 1) {
                     //this.ctx.fillStyle = this.color_alt.alternate();
                     //this.ctx.fillRect(rect_x, Math.abs(Math.cos(y) * 600), size, size);
-                    //size = randInterval(10, 1);
+                    //size = randInterval(1, 10);
                     this.ctx.fillRect(rect_x, y, size, size);
                 //}
             }
@@ -128,16 +125,17 @@ Bars.prototype._drawChunksAlt = function (x, offset) {
         }
 
 }
-Bars.prototype._drawNoise = function (x, offset) {
-        var start = x - Math.floor(offset / 2);
+Bars.prototype._drawNoise = function (x) {
         var size = 1;
         var amount = this.lineWidth / size;
         var jitter;
+        var step;
 
-        for (var rect_x = start; rect_x < this.max_x; rect_x += size) {
+        for (var rect_x = x; rect_x < this.max_x; rect_x += step) {
             // Jitter is good.
             jitter = rand0(100);
-            for (var y = randInterval(this.max_y, this.max_y * (3/4)) - jitter; y < this.max_y; y += size) {
+            step = randInterval(1, 50);
+            for (var y = randInterval(this.max_y * (3/4), this.max_y) - jitter; y < this.max_y; y += size) {
                 this.ctx.fillStyle = tinycolor(this.color_alt.alternate()).desaturate(100).toString();
                 this.ctx.fillRect(rect_x, y, size, size);
             }
@@ -147,27 +145,18 @@ Bars.prototype._drawNoise = function (x, offset) {
 
 Bars.prototype._drawChunksRandomSize = function (x, offset) {
         var start = x - Math.floor(offset / 2);
-        var size = randInterval(10, 3);
+        var size = randInterval(3, 10);
         var amount = this.lineWidth / size;
         var jitter;
 
         for (var rect_x = start; rect_x < this.max_x; rect_x += size) {
-            // Jitter values between 20 - 60 seem good.
+            // Jitter values between 20 - 60 seem good. Or 200, 200 is also good.
             jitter = rand0(200);
-            for (var y = randInterval(this.max_y, this.max_y * (3/4)) - jitter; y < this.max_y; y += size) {
-                //if (randBool()) {
-                //    this.ctx.fillStyle = tinycolor(this.color_alt.alternate()).saturate(100)
-                //                                                              .toString();
-                //} else {
-                //    this.ctx.fillStyle = tinycolor(this.color_alt.alternate()).desaturate(100)
-                //                                                              .toString();
-                //}
-
+            for (var y = randInterval(this.max_y * (3/4), this.max_y) - jitter; y < this.max_y; y += size) {
                 this.ctx.fillStyle = tinycolor(this.color_alt.alternate()).darken(rand(80)).greyscale().toString();
-                size = randInterval(10, 3);
+                size = randInterval(3, 10);
                 this.ctx.fillRect(rect_x, y, size, size);
             }
-            //start += size;
         }
 
 }
@@ -177,8 +166,7 @@ Bars.prototype._drawLine = function (x, randLength) {
     var noise = 0;
     var limit;
     if (randLength) {
-        limit = randInterval(this.max_y, 20);
-        //limit = Math.abs(Math.sin(x) * 500);
+        limit = randInterval(20, this.max_y);
     } else {
         limit = this.max_y;
     }

@@ -26,10 +26,6 @@
     </style>
     </head>
     <body bgcolor="#333">
-        <!--
-        <input id="speed" type="range" min="100" max="1000" step="100">Speed</input><br />
-        <input id="rlength" type="checkbox">Random Length</input>
-        -->
         <canvas id="foo" width="200" height="100">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
@@ -37,10 +33,8 @@
         <script>
             var interval;
             var c = document.getElementById("foo");
-            //var max_height = screen.height;
-            //var max_width = screen.width;
-            var max_height = 600;
-            var max_width = 600;
+            var max_height = 500;
+            var max_width = 500;
             c.width = max_width;
             c.height = max_height;
             var ctx = c.getContext("2d");
@@ -53,35 +47,17 @@
                                 cmyk,
                                 20,
                                 false);
-            bars.run()
-            //interval = setInterval(bars.run.bind(bars), 80);
-            //c.addEventListener("mouseenter",
-            //                   function (e) {
-            //                       clearInterval(interval);
-            //                   },
-            //                   true);
-            //c.addEventListener("mouseleave",
-            //                   function (e) {
-            //                       interval = setInterval(bars.run.bind(bars), 100)
-            //                   },
-            //                   true); 
-            //interval = setInterval(bars.run.bind(bars), speed.valueAsNumber);
-
-            //speed.addEventListener("change",
-            //                    function (e) {
-            //                        clearInterval(interval);
-            //                        new_speed = speed.valueAsNumber;
-            //                        interval = setInterval(bars.run.bind(bars), new_speed);
-            //                    },
-            //                    true);
-
-            //randomLength.addEventListener("change",
-            //                              function (e) {
-            //                                   bars.randLength = rlength.checked;
-            //                                   console.log('bars.randLength:', bars.randLength);
-            //                               },
-            //                               true);
+            interval = setInterval(bars.run.bind(bars), 100);
+            c.addEventListener("mouseenter",
+                               function (e) {
+                                   clearInterval(interval);
+                               },
+                               true);
+            c.addEventListener("mouseleave",
+                               function (e) {
+                                   interval = setInterval(bars.run.bind(bars), 100)
+                               },
+                               true); 
         </script>
-
     </body>
 </html>
