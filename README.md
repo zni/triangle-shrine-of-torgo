@@ -9,6 +9,11 @@ Javascript/canvas based generative art-ish stuff.
 
 What is inside?
 ---------------
+`bars.html` is kind of like a broken video feed.
+* requires TinyColor
+
+`blocks.html` is a tiling block pattern.
+* requires TinyColor
 
 `static.html` and `static2.html` are older self-contained noisy things that move.
 
@@ -21,7 +26,6 @@ and [John Franzen](http://www.johnfranzen.com/art/JOHN_FRANZEN_-_EACH_LINE_ONE_B
 really just shitting triangles over the top of other triangles in opposite
 orientations.
 
-`bars.html` is kind of like a broken video feed.
 
 
 Dependencies?
