@@ -47,15 +47,17 @@
                                 cmyk,
                                 20,
                                 false);
-            interval = setInterval(bars.run.bind(bars), 100);
+            interval = setInterval(bars.run.bind(bars), 500);
             c.addEventListener("mouseenter",
                                function (e) {
-                                   clearInterval(interval);
+                                   // clearInterval(interval);
+                                   bars.color = new ColorPicker(gray7);
                                },
                                true);
             c.addEventListener("mouseleave",
                                function (e) {
-                                   interval = setInterval(bars.run.bind(bars), 100)
+                                   interval = setInterval(bars.run.bind(bars), 500)
+                                   bars.color = new ColorPicker(cmyk);
                                },
                                true); 
         </script>
